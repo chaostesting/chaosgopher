@@ -1,0 +1,12 @@
+# vim: filetype=Dockerfile
+FROM debian
+
+RUN apt-get update
+RUN apt-get install -y python
+
+COPY debs/mysql-connector-python_2.0.4-1debian7.6_all.deb .
+COPY debs/mysql-utilities_1.5.6-1debian7_all.deb .
+RUN dpkg -i mysql-connector-python_2.0.4-1debian7.6_all.deb
+RUN dpkg -i mysql-utilities_1.5.6-1debian7_all.deb
+
+CMD ["mysqlfailover", "--force", "--interval=5", "--verbose", "--master=root:chaostestingrootpassword@172.17.42.1:3307", "--discover-slaves-login=root:chaostestingrootpassword", "--candidates=root:chaostestingrootpassword@172.17.42.1:3308", "--failover-mode=auto"]

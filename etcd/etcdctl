@@ -1,0 +1,4 @@
+FROM golang
+
+RUN go get -v github.com/coreos/etcd/etcdctl
+ENTRYPOINT ["/go/bin/etcdctl"]

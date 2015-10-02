@@ -1,0 +1,11 @@
+# vim: filetype=Dockerfile
+FROM mysql:5.7
+
+# folders referenced in configurations
+RUN mkdir -p /logs
+RUN chown -R mysql /logs
+
+ADD ./conf.d/slave.cnf /template.cnf
+RUN bash -c 'sed -e "s/SERVER_ID/$RANDOM/g" /template.cnf > /etc/mysql/conf.d/slave.cnf'
+RUN rm /template.cnf
+

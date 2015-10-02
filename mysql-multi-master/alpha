@@ -1,0 +1,13 @@
+# vim: filetype=Dockerfile
+FROM mysql:5.7
+
+# folders referenced in configurations
+RUN mkdir -p /logs
+RUN chown -R mysql /logs
+
+ADD ./conf.d/master.cnf /template.cnf
+ENV SERVER_PORT 3306
+
+RUN bash -c 'sed -e "s/SERVER_ID/$RANDOM/g" -e "s/SERVER_PORT/$SERVER_PORT/g" /template.cnf > /etc/mysql/conf.d/master.cnf'
+RUN rm /template.cnf
+

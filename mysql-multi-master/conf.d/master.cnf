@@ -1,0 +1,19 @@
+[mysqld]
+server_id    = SERVER_ID
+port         = SERVER_PORT
+report_host  = 172.17.42.1
+report_port  = SERVER_PORT
+
+general_log      = ON
+general_log_file = /logs/queries.log
+log_bin          = /logs/mysql-bin.log
+binlog_do_db     = chaostesting
+
+master_info_repository   = TABLE
+gtid_mode                = ON
+enforce_gtid_consistency = ON
+
+slave_net_timeout         = 3
+slave_transaction_retries = 1
+skip_name_resolve         = ON
+
